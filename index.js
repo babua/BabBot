@@ -5,13 +5,13 @@ config = require('./config/config.js'),
 tutor = require('tutor'),
 request = require('request'),
 mongoose = require('./config/mongoose'),
-CronJob = require('cron').CronJob,
+// CronJob = require('cron').CronJob,
 SC = require('soundcloud-nodejs-api-wrapper'),
 omdb = require('omdb');
 
 request = request.defaults({jar: true})
 db = mongoose();
-var Game = db.model('Game');
+// var Game = db.model('Game');
 
 var sc = new SC({
   client_id : 'YOUR_CLIENT_ID',
@@ -20,167 +20,167 @@ var sc = new SC({
 });
 soundcloud = sc.client();
 
-var steamDbUpdate = function(){
-	console.log('Updating game DB...');
-	var allGames = request('http://api.steampowered.com/ISteamApps/GetAppList/v0001/',function(error,response,body){
-		if (!error && response.statusCode == 200) {
-			games = JSON.parse(body).applist.apps.app;
-			games.forEach(function(game,ind,arr){
-				Game.update({"appid": game.appid}, {$set: {"name": game.name}}, {"upsert": true}, function(err,result){});	
-			});
-		}
-	});
-	return true;
-};
+// var steamDbUpdate = function(){
+// 	console.log('Updating game DB...');
+// 	var allGames = request('http://api.steampowered.com/ISteamApps/GetAppList/v0001/',function(error,response,body){
+// 		if (!error && response.statusCode == 200) {
+// 			games = JSON.parse(body).applist.apps.app;
+// 			games.forEach(function(game,ind,arr){
+// 				Game.update({"appid": game.appid}, {$set: {"name": game.name}}, {"upsert": true}, function(err,result){});	
+// 			});
+// 		}
+// 	});
+// 	return true;
+// };
 
-var checkSteamJob = new CronJob('* * */12 * * *', steamDbUpdate, function(){
-	console.log('Game DB update finished');
-}, true);
-
-
-var steamFetchPrice = function(query,cc,message){
+// var checkSteamJob = new CronJob('* * */12 * * *', steamDbUpdate, function(){
+// 	console.log('Game DB update finished');
+// }, true);
 
 
-			var parsePriceHTML = function(html,reqUrl){
-						var regexName = new RegExp('<h1>Buy (.*)<\/h1>','gm');
-						var names = new Array();
-						var result;
-						while((result = regexName.exec(html)) !== null){
-							names.push(result[1]);
-						}
-						// console.log(names);
+// var steamFetchPrice = function(query,cc,message){
 
-						var regexPrice = new RegExp('<div class="game_purchase_price price">\\s*(.*?)\\s*<\/div>','gm');
-						var prices = new Array();
-						while((result = regexPrice.exec(html)) !== null){
-							prices.push(result[1]);
-						}
 
-						var regexChar = new RegExp('&#(.*?);','g');
-						prices.forEach(function(val,ind,arr){
-							val = val.replace(regexChar,function(match){
-								// console.log(match);
-								// console.log(match.slice(2,match.length-1));
-								// console.log(String.fromCharCode(match.slice(2,match.length-1)));
-								return String.fromCharCode(match.slice(2,match.length-1));
-							});
+// 			var parsePriceHTML = function(html,reqUrl){
+// 						var regexName = new RegExp('<h1>Buy (.*)<\/h1>','gm');
+// 						var names = new Array();
+// 						var result;
+// 						while((result = regexName.exec(html)) !== null){
+// 							names.push(result[1]);
+// 						}
+// 						// console.log(names);
 
-							// console.log(val);
-							// console.log('Changing array val');
-							arr[ind] = val;
-							// console.log(arr);
-						});
+// 						var regexPrice = new RegExp('<div class="game_purchase_price price">\\s*(.*?)\\s*<\/div>','gm');
+// 						var prices = new Array();
+// 						while((result = regexPrice.exec(html)) !== null){
+// 							prices.push(result[1]);
+// 						}
 
-						console.log(prices);
-						if(names.length > 0 && prices.length > 0)
-						{
-							if(names.length === prices.length)
-							{
-								var msgText = '';
-								for (var i = 0; i < names.length; i++) {
-									msgText += names[i] + "  |  " + prices[i] + "\n";
-								};
-								msgText += "\n"+reqUrl;
-								bot.sendMessage({"chat_id" : message.chat.id , "text" : msgText},function(nodifiedPromise){});	
-							} else 
-							{
-								var msgText = names[0] + "\t\t" + prices[0] + "\n";
-								msgText += "\n"+reqUrl;
-								bot.sendMessage({"chat_id" : message.chat.id , "text" : msgText},function(nodifiedPromise){});	
+// 						var regexChar = new RegExp('&#(.*?);','g');
+// 						prices.forEach(function(val,ind,arr){
+// 							val = val.replace(regexChar,function(match){
+// 								// console.log(match);
+// 								// console.log(match.slice(2,match.length-1));
+// 								// console.log(String.fromCharCode(match.slice(2,match.length-1)));
+// 								return String.fromCharCode(match.slice(2,match.length-1));
+// 							});
 
-							}
+// 							// console.log(val);
+// 							// console.log('Changing array val');
+// 							arr[ind] = val;
+// 							// console.log(arr);
+// 						});
 
-						}
+// 						console.log(prices);
+// 						if(names.length > 0 && prices.length > 0)
+// 						{
+// 							if(names.length === prices.length)
+// 							{
+// 								var msgText = '';
+// 								for (var i = 0; i < names.length; i++) {
+// 									msgText += names[i] + "  |  " + prices[i] + "\n";
+// 								};
+// 								msgText += "\n"+reqUrl;
+// 								bot.sendMessage({"chat_id" : message.chat.id , "text" : msgText},function(nodifiedPromise){});	
+// 							} else 
+// 							{
+// 								var msgText = names[0] + "\t\t" + prices[0] + "\n";
+// 								msgText += "\n"+reqUrl;
+// 								bot.sendMessage({"chat_id" : message.chat.id , "text" : msgText},function(nodifiedPromise){});	
+
+// 							}
+
+// 						}
 					
-			};
+// 			};
 
-			var getGamePriceAndSend = function(game,message){
-				// console.log(game);
-				// console.log(message);
-				// console.log(cc);
-				var reqUrl = 'http://store.steampowered.com/app/' + game.appid + '?cc=' + cc;
-				// console.log(reqUrl);
+// 			var getGamePriceAndSend = function(game,message){
+// 				// console.log(game);
+// 				// console.log(message);
+// 				// console.log(cc);
+// 				var reqUrl = 'http://store.steampowered.com/app/' + game.appid + '?cc=' + cc;
+// 				// console.log(reqUrl);
 
-				var j = request.jar();
-				var cookie = request.cookie("birthtime=28801; path=/; domain=store.steampowered.com");
-				j.setCookie(cookie, reqUrl);
+// 				var j = request.jar();
+// 				var cookie = request.cookie("birthtime=28801; path=/; domain=store.steampowered.com");
+// 				j.setCookie(cookie, reqUrl);
 
-				request({url:reqUrl,followRedirect:true}, function (error, response, html) {
+// 				request({url:reqUrl,followRedirect:true}, function (error, response, html) {
 
-					if (!error && response.statusCode == 302){
-						// console.log(response.headers);
-						j.setCookie(cookie, response.headers.location);
-						request.post({
-							url:response.headers.location,
-							form: 
-							{
-								snr: "1_agecheck_agecheck__age-gate",
-								ageDay: "1",
-								ageMonth: "January",
-								ageYear: "1980"
-							}
-						  }, function(err,resp,body){
-						  	console.log("after redirect");
-						  	console.log(resp);
-						  	console.log(body);
-						  	parsePriceHTML(body,reqUrl);
-						});
-					}
+// 					if (!error && response.statusCode == 302){
+// 						// console.log(response.headers);
+// 						j.setCookie(cookie, response.headers.location);
+// 						request.post({
+// 							url:response.headers.location,
+// 							form: 
+// 							{
+// 								snr: "1_agecheck_agecheck__age-gate",
+// 								ageDay: "1",
+// 								ageMonth: "January",
+// 								ageYear: "1980"
+// 							}
+// 						  }, function(err,resp,body){
+// 						  	console.log("after redirect");
+// 						  	console.log(resp);
+// 						  	console.log(body);
+// 						  	parsePriceHTML(body,reqUrl);
+// 						});
+// 					}
 
-					if (!error && response.statusCode == 200) {
-						console.log("received status ok");
-						parsePriceHTML(html,reqUrl);
-						}
-					})
+// 					if (!error && response.statusCode == 200) {
+// 						console.log("received status ok");
+// 						parsePriceHTML(html,reqUrl);
+// 						}
+// 					})
 
-			};
+// 			};
 
 			
-			var findGameCallback = function(err,game){
-				if(err){
-					console.log(err);
-					return
-				}
-				console.log('Database returned: ')
-				console.log(game);
-				var findGameLooseCallback = function(errNested,gameNested){
-						if(gameNested === null)
-						{
-							bot.sendMessage({"chat_id" : message.chat.id , "text" : "Steam Search | Game not found"},function(nodifiedPromise){});	
-						}
-						else
-						{
-							console.log("found after loose search");
-							getGamePriceAndSend(gameNested,message);	
-						}
+// 			var findGameCallback = function(err,game){
+// 				if(err){
+// 					console.log(err);
+// 					return
+// 				}
+// 				console.log('Database returned: ')
+// 				console.log(game);
+// 				var findGameLooseCallback = function(errNested,gameNested){
+// 						if(gameNested === null)
+// 						{
+// 							bot.sendMessage({"chat_id" : message.chat.id , "text" : "Steam Search | Game not found"},function(nodifiedPromise){});	
+// 						}
+// 						else
+// 						{
+// 							console.log("found after loose search");
+// 							getGamePriceAndSend(gameNested,message);	
+// 						}
 						
-					};
-				findGameLooseCallback.message = message;
-				if(game === null){
-					Game.findOne({"name":{$regex: regexLoose}},findGameLooseCallback);	
-				} else 
-				{
-					if(game === null)
-						{
+// 					};
+// 				findGameLooseCallback.message = message;
+// 				if(game === null){
+// 					Game.findOne({"name":{$regex: regexLoose}},findGameLooseCallback);	
+// 				} else 
+// 				{
+// 					if(game === null)
+// 						{
 							
-							bot.sendMessage({"chat_id" : message.chat.id , "text" : "Steam Search | Game not found"},function(nodifiedPromise){});	
-						}
-						else
-						{	
-							console.log("found after regular search");
-							console.log(game);
-							console.log(message);
-							getGamePriceAndSend(game,message);
-						}
-				}
+// 							bot.sendMessage({"chat_id" : message.chat.id , "text" : "Steam Search | Game not found"},function(nodifiedPromise){});	
+// 						}
+// 						else
+// 						{	
+// 							console.log("found after regular search");
+// 							console.log(game);
+// 							console.log(message);
+// 							getGamePriceAndSend(game,message);
+// 						}
+// 				}
 
-			};
-			findGameCallback.message = message;
-			var regex = new RegExp('^' + query + '$','i');
-			var regexLoose = new RegExp(query,'i');
-			// console.log(regex);
-			Game.findOne({"name":{$regex: regex}},findGameCallback);
-};
+// 			};
+// 			findGameCallback.message = message;
+// 			var regex = new RegExp('^' + query + '$','i');
+// 			var regexLoose = new RegExp(query,'i');
+// 			// console.log(regex);
+// 			Game.findOne({"name":{$regex: regex}},findGameCallback);
+// };
 
 
 
@@ -225,7 +225,7 @@ var bot = new Bot({
 				if(err) return console.log(err);
 				console.log(results);
 				if(results !== null){
-					result = results;
+					result = results;`
 					var resultText = result.title + " ("  + result.year + ") | " + result.imdb.rating + "\n" + "http://www.imdb.com/title/" +result.imdb.id;
 					bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});	
 				} else {
@@ -293,25 +293,25 @@ var bot = new Bot({
 			steamDbUpdate();
 		}
 
-		if(splitStr[0] === "/steam"){
-			query = message.text.substring('/steam '.length);
-			console.log('Searching for ' + query);
-			steamFetchPrice(query,'tr',message);
-		}
+		// if(splitStr[0] === "/steam"){
+		// 	query = message.text.substring('/steam '.length);
+		// 	console.log('Searching for ' + query);
+		// 	steamFetchPrice(query,'tr',message);
+		// }
 
-		if(splitStr[0] === "/steamcc"){
-			if(splitStr.length > 2){
-			query = message.text.substring(splitStr[0].length + 1 + splitStr[1].length + 1);
-			console.log('Searching for ' + query);
-			var cc = splitStr[1];
-			steamFetchPrice(query,cc,message);	
-			} else
-			{
-				var msgText = 'Invalid format. Try something like: \"/steamcc us half-life\"';
-				bot.sendMessage({"chat_id" : message.chat.id , "text" : msgText},function(nodifiedPromise){});	
-			}
+		// if(splitStr[0] === "/steamcc"){
+		// 	if(splitStr.length > 2){
+		// 	query = message.text.substring(splitStr[0].length + 1 + splitStr[1].length + 1);
+		// 	console.log('Searching for ' + query);
+		// 	var cc = splitStr[1];
+		// 	steamFetchPrice(query,cc,message);	
+		// 	} else
+		// 	{
+		// 		var msgText = 'Invalid format. Try something like: \"/steamcc us half-life\"';
+		// 		bot.sendMessage({"chat_id" : message.chat.id , "text" : msgText},function(nodifiedPromise){});	
+		// 	}
 			
-		}
+		// }
 
 		if(splitStr[0] === "/sc"){
 			query = message.text.substring('/sc '.length);
