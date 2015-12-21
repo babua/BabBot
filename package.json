@@ -1,0 +1,15 @@
+{
+	"name": "BabBot",
+	"version": "0.0.1",
+	"description": "Eylencelik Telaaaram Botu",
+	"dependencies": {
+		"node-telegram-bot" : "latest",
+		"youtube-search" : "latest",
+		"tutor" : "latest",
+		"request" : "latest",
+		"mongoose" : "latest",
+		"cron" : "latest",
+		"tough-cookie" : "latest",
+		"soundcloud-nodejs-api-wrapper" : "latest"
+	}
+}
