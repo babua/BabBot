@@ -8,7 +8,6 @@
 		"tutor" : "latest",
 		"request" : "latest",
 		"mongoose" : "latest",
-		// "cron" : "latest",
 		"tough-cookie" : "latest",
 		"soundcloud-nodejs-api-wrapper" : "latest",
 		"omdb" : "latest",
