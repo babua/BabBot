@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"description": "Eylencelik Telaaaram Botu",
 	"dependencies": {
+		"mongodb" : "latest",
 		"node-telegram-bot" : "latest",
 		"youtube-search" : "latest",
 		"tutor" : "latest",
