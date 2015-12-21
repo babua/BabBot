@@ -227,7 +227,7 @@ var bot = new Bot({
 				console.log(results);
 				if(results.length > 0){
 					result = results[0];
-					resultText = result.title + "\n" + result.description + "\n" + result.link;
+					resultText = result.title + "\n\n" + result.description + "\n" + result.link;
 					result = results[0];
 					bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});
 				} else {
