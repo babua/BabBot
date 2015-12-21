@@ -219,6 +219,9 @@ var bot = new Bot({
 		}
 
 		if(splitStr[0] === "/imdb"){
+			var numberWithCommas = function(x){
+				return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			};
 			query = message.text.substring('/imdb'.length + 1);
 			console.log(query);
 			var omdbCallback = function(err,results){
@@ -226,7 +229,7 @@ var bot = new Bot({
 				console.log(results);
 				if(results !== null){
 					result = results;
-					var resultText = result.title + " ("  + result.year + ") | " + result.imdb.rating + " | " + result.imdb.votes +" votes\n" + "http://www.imdb.com/title/" +result.imdb.id;
+					var resultText = result.title + " ("  + result.year + ") | " + result.imdb.rating + " | " + numberWithCommas(result.imdb.votes) +" votes\n" + "http://www.imdb.com/title/" +result.imdb.id;
 					bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});	
 				} else {
 					bot.sendMessage({"chat_id" : message.chat.id , "text" : "IMDB'de \"" + query + "\" diye bişey bulamadım  " + message.from.first_name + " ¯\\_(ツ)_/¯" },function(nodifiedPromise){});	
