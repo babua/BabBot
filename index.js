@@ -225,7 +225,7 @@ var bot = new Bot({
 				if(err) return console.log(err);
 				console.log(results);
 				if(results !== null){
-					result = results;`
+					result = results;
 					var resultText = result.title + " ("  + result.year + ") | " + result.imdb.rating + "\n" + "http://www.imdb.com/title/" +result.imdb.id;
 					bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});	
 				} else {
