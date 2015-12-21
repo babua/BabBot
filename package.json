@@ -11,6 +11,7 @@
 		"tough-cookie" : "latest",
 		"soundcloud-nodejs-api-wrapper" : "latest",
 		"omdb" : "latest",
-		"google" : "latest"
+		"google" : "latest",
+		"g-i-s" : "latest"
 	}
 }

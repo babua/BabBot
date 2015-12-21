@@ -8,7 +8,8 @@ mongoose = require('./config/mongoose'),
 // CronJob = require('cron').CronJob,
 SC = require('soundcloud-nodejs-api-wrapper'),
 omdb = require('omdb'),
-google = require('google');
+google = require('google'),
+gis = require('g-i-s');
 
 request = request.defaults({jar: true})
 db = mongoose();
@@ -220,7 +221,7 @@ var bot = new Bot({
 		}
 
 		if(splitStr[0] === "/g"){
-			query = message.text.substring('/g'.length + 1)
+			query = message.text.substring('/g'.length + 1);
 			google.resultsPerPage = 1;
 			var googleCallback = function(err,next,results){
 				if(err) return console.log(err);
@@ -243,6 +244,27 @@ var bot = new Bot({
 			google(query, googleCallback);
 		}
 
+		if(splitStr[0] === "/gi"){
+			query = message.text.substring('/gi'.length + 1);
+			var googleImageCallback = function(err,results){
+				if(err) return console.log(err);
+				console.log(results);
+				if(results.length > 0){
+					result = results[0];
+					resultText = query + "\n" + result;
+					bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});
+				} else {
+					bot.sendMessage({"chat_id" : message.chat.id , "text" : "Google Images'da \"" + query + "\" diye bişey bulamadım  " + message.from.first_name + " ¯\\_(ツ)_/¯" },function(nodifiedPromise){});	
+				}
+				bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
+
+			};
+
+			googleImageCallback.message = message;
+			googleImageCallback.query = query;
+			bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
+			gis(query, googleImageCallback);
+		}
 
 		if(splitStr[0] === "/imdb"){
 			var numberWithCommas = function(x){
