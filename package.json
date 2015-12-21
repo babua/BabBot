@@ -10,6 +10,7 @@
 		"mongoose" : "latest",
 		"cron" : "latest",
 		"tough-cookie" : "latest",
-		"soundcloud-nodejs-api-wrapper" : "latest"
+		"soundcloud-nodejs-api-wrapper" : "latest",
+		"omdb" : "latest"
 	}
 }
