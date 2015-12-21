@@ -1,4 +1,0 @@
-For fresh installs, currently there's a problem with the mongodb installation.
-The workaround is running "apt-get install libkrb5-dev" before doing an "npm install". If you already have a mongodb or mongoose installation running, you should be fine.
-
-Also, I'm not sure but you may need to do a manual "node install moment" for some reason, try it if npm install fails there ¯\_(ツ)_/¯
