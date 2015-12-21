@@ -7,7 +7,8 @@ request = require('request'),
 mongoose = require('./config/mongoose'),
 // CronJob = require('cron').CronJob,
 SC = require('soundcloud-nodejs-api-wrapper'),
-omdb = require('omdb');
+omdb = require('omdb'),
+google = require('google');
 
 request = request.defaults({jar: true})
 db = mongoose();
@@ -217,6 +218,31 @@ var bot = new Bot({
 			bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
 			youtube(query, opts, youtubeCallback);
 		}
+
+		if(splitStr[0] === "/g"){
+			query = message.text.substring('/g'.length + 1)
+			google.resultsPerPage = 1;
+			var googleCallback = function(err,next,results){
+				if(err) return console.log(err);
+				console.log(results);
+				if(results.length > 0){
+					result = results[0];
+					resultText = result.title + "\n" + result.description + "\n" + result.link;
+					result = results[0];
+					bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});
+				} else {
+					bot.sendMessage({"chat_id" : message.chat.id , "text" : "Google'da \"" + query + "\" diye bişey bulamadım  " + message.from.first_name + " ¯\\_(ツ)_/¯" },function(nodifiedPromise){});	
+				}
+				bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
+
+			};
+
+			googleCallback.message = message;
+			googleCallback.query = query;
+			bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
+			google(query, googleCallback);
+		}
+
 
 		if(splitStr[0] === "/imdb"){
 			var numberWithCommas = function(x){
