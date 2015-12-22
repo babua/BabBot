@@ -90,8 +90,6 @@ var bot = new Bot({
 				} else {
 					bot.sendMessage({"chat_id" : message.chat.id , "text" : "Google Images'da \"" + query + "\" diye bişey bulamadım  " + message.from.first_name + " ¯\\_(ツ)_/¯" },function(nodifiedPromise){});	
 				}
-				bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
-
 			};
 
 			googleImageCallback.message = message;
