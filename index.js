@@ -7,7 +7,7 @@ request = require('request'),
 SC = require('soundcloud-nodejs-api-wrapper'),
 omdb = require('omdb'),
 google = require('google'),
-gis = require('g-i-s');
+createParser = require('search-engine-parser');
 
 request = request.defaults({jar: true})
 
@@ -18,6 +18,7 @@ var sc = new SC({
 });
 soundcloud = sc.client();
 
+var googleImagesParser = createParser('google-images');
 
 var bot = new Bot({
 	token: config.telegram.token
@@ -96,7 +97,7 @@ var bot = new Bot({
 			googleImageCallback.message = message;
 			googleImageCallback.query = query;
 			bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
-			gis(query, googleImageCallback);
+			googleImagesParser.search(query, googleImageCallback);
 		}
 
 		if(splitStr[0] === "/imdb"){
