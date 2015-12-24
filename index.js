@@ -119,7 +119,7 @@ var bot = new Bot({
 						}
 						
 						fullUrlCallback.title = page.title;
-						requestString = 'https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&pageids=' + pageid;	
+						requestString = 'https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&pageids=' + page.pageid;	
 						request(requestString,fullUrlCallback);
 
 					} else {
