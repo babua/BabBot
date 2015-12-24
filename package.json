@@ -11,6 +11,7 @@
 		"soundcloud-nodejs-api-wrapper" : "latest",
 		"omdb" : "latest",
 		"google" : "latest",
-		"search-engine-parser" : "latest"
+		"search-engine-parser" : "latest",
+		"wikipedia-js" : "latest"
 	}
 }

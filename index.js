@@ -7,7 +7,8 @@ request = require('request'),
 SC = require('soundcloud-nodejs-api-wrapper'),
 omdb = require('omdb'),
 google = require('google'),
-createParser = require('search-engine-parser');
+createParser = require('search-engine-parser'),
+wikipedia = require("wikipedia-js");
 
 request = request.defaults({jar: true})
 
@@ -97,6 +98,30 @@ var bot = new Bot({
 			bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
 			googleImagesParser.search(query, googleImageCallback);
 		}
+
+		if(splitStr[0] === "/wp"){
+			query = message.text.substring('/wp'.length + 1);
+			var wikipediaCallback = function(err,results){
+				if(err) return console.log(err);
+				console.log(results);
+				if(results !== null){
+					var result = JSON.parse(results).query.pages;
+					var page = result[Object.keys(result)[0]];
+					if(page.hasOwnProperty("pageid")){
+						resultText = query + "\nhttp://en.wikipedia.org/?curid=" + page.pageid;
+						bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});
+					} else {
+						bot.sendMessage({"chat_id" : message.chat.id , "text" : "Wikipedia'da \"" + query + "\" diye bişey bulamadım  " + message.from.first_name + " ¯\\_(ツ)_/¯" },function(nodifiedPromise){});	
+					}			
+				} 
+			};
+
+			wikipediaCallback.message = message;
+			wikipediaCallback.query = query;
+			bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
+			opts = {query: query, format: "json", summaryOnly: true};
+			wikipedia.searchArticle(opts, wikipediaCallback);
+		}		
 
 		if(splitStr[0] === "/imdb"){
 			var numberWithCommas = function(x){
