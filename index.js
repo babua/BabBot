@@ -107,8 +107,8 @@ var bot = new Bot({
 				if(results !== null){
 					var result = JSON.parse(results).query.pages;
 					var page = result[Object.keys(result)[0]];
-					if(page.hasOwnProperty("pageid")){
-						resultText = query + "\nhttp://en.wikipedia.org/?curid=" + page.pageid;
+					if(page.hasOwnProperty("pageid") && page.hasOwnProperty("title")){
+						resultText = page.title + "\nhttp://en.wikipedia.org/?curid=" + page.pageid;
 						bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});
 					} else {
 						bot.sendMessage({"chat_id" : message.chat.id , "text" : "Wikipedia'da \"" + query + "\" diye bişey bulamadım  " + message.from.first_name + " ¯\\_(ツ)_/¯" },function(nodifiedPromise){});	
