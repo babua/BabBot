@@ -110,7 +110,7 @@ var bot = new Bot({
 					if(page.hasOwnProperty("pageid") && page.hasOwnProperty("title")){
 
 						var fullUrlCallback = function(err,response,body){
-							if (!error && response.statusCode == 200) {
+							if (!err && response.statusCode == 200) {
 								page = JSON.parse(body).query.pages;
 								fullUrl = page[Object.keys(page)[0]].fullurl;
 								resultText = title + "\n" + fullUrl;
