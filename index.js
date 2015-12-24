@@ -113,12 +113,11 @@ var bot = new Bot({
 							if (!err && response.statusCode == 200) {
 								page = JSON.parse(body).query.pages;
 								fullUrl = page[Object.keys(page)[0]].fullurl;
+								title = page[Object.keys(page)[0]].title;
 								resultText = title + "\n" + fullUrl;
 								bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});
 							}
 						}
-						
-						fullUrlCallback.title = page.title;
 						requestString = 'https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&pageids=' + page.pageid;	
 						request(requestString,fullUrlCallback);
 
