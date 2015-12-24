@@ -105,11 +105,23 @@ var bot = new Bot({
 				if(err) return console.log(err);
 				console.log(results);
 				if(results !== null){
-					var result = JSON.parse(results).query.pages;
-					var page = result[Object.keys(result)[0]];
+					result = JSON.parse(results).query.pages;
+					page = result[Object.keys(result)[0]];
 					if(page.hasOwnProperty("pageid") && page.hasOwnProperty("title")){
-						resultText = page.title + "\nhttp://en.wikipedia.org/?curid=" + page.pageid;
-						bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});
+
+						var fullUrlCallback = function(err,response,body){
+							if (!error && response.statusCode == 200) {
+								page = JSON.parse(body).query.pages;
+								fullUrl = page[Object.keys(page)[0]].fullurl;
+								resultText = title + "\n" + fullUrl;
+								bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});
+							}
+						}
+						
+						fullUrlCallback.title = title;
+						requestString = 'https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&pageids=' + pageid;	
+						request(requestString,fullUrlCallback);
+
 					} else {
 						bot.sendMessage({"chat_id" : message.chat.id , "text" : "Wikipedia'da \"" + query + "\" diye bişey bulamadım  " + message.from.first_name + " ¯\\_(ツ)_/¯" },function(nodifiedPromise){});	
 					}			
