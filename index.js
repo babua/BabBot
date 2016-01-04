@@ -7,7 +7,6 @@ request = require('request'),
 SC = require('soundcloud-nodejs-api-wrapper'),
 omdb = require('omdb'),
 google = require('google'),
-createParser = require('search-engine-parser'),
 wikipedia = require("wikipedia-js");
 
 request = request.defaults({jar: true})
@@ -18,8 +17,6 @@ var sc = new SC({
   redirect_uri : 'YOUR_REDIRECT_URI'
 });
 soundcloud = sc.client();
-
-var googleImagesParser = createParser('google-images');
 
 var bot = new Bot({
 	token: config.telegram.token
@@ -77,26 +74,6 @@ var bot = new Bot({
 			googleCallback.query = query;
 			bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
 			google(query, googleCallback);
-		}
-
-		if(splitStr[0] === "/gi"){
-			query = message.text.substring('/gi'.length + 1);
-			var googleImageCallback = function(err,results){
-				if(err) return console.log(err);
-				console.log(results);
-				if(results.length > 0){
-					result = results[0];
-					resultText = query + "\n" + result;
-					bot.sendMessage({"chat_id" : message.chat.id , "text" : resultText},function(nodifiedPromise){});
-				} else {
-					bot.sendMessage({"chat_id" : message.chat.id , "text" : "Google Images'da \"" + query + "\" diye bişey bulamadım  " + message.from.first_name + " ¯\\_(ツ)_/¯" },function(nodifiedPromise){});	
-				}
-			};
-
-			googleImageCallback.message = message;
-			googleImageCallback.query = query;
-			bot.sendChatAction({"chat_id" : message.chat.id, "action" : "typing" }, function(nodifiedPromise){});
-			googleImagesParser.search(query, googleImageCallback);
 		}
 
 		if(splitStr[0] === "/wp"){
