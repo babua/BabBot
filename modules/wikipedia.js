@@ -13,18 +13,16 @@ var wikipediaModule = {
     ],
 
     onMessage: function (query, parameters) {
+        var message = this.message;
         var wikipediaCallback = function (err, results) {
             if (err) {
                 console.error(err);
                 return;
             }
 
-            console.log(results);
-
-            if (results === null) {
+            if (results !== null) {
                 var result = JSON.parse(results).query.pages;
                 var page = result[Object.keys(result)[0]];
-
                 if (page.hasOwnProperty('pageid') && page.hasOwnProperty('title')) {
                     request(
                         'https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&pageids=' + page.pageid,

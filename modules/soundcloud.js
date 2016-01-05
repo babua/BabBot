@@ -17,15 +17,16 @@ var soundcloudModule = {
     ],
 
     onMessage: function (query, parameters) {
+        var message = this.message;
         var soundcloudCallback = function (err, results) {
             if (err) {
                 console.error(err);
                 return;
             }
 
-            console.log(results);
-
             var result = results[0];
+            
+            console.log(result);
 
             if (result !== undefined && result.hasOwnProperty('title') && result.hasOwnProperty('permalink_url')) {
                 var resultText = result.title + '\n' + result.permalink_url;
@@ -47,10 +48,10 @@ var soundcloudModule = {
                 );
             }
         };
-
+        
         bot.sendChatAction(
             {
-                chat_id: message.chat.id,
+                chat_id: this.message.chat.id,
                 action: 'typing'
             },
             function (nodifiedPromise) {}

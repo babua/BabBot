@@ -8,6 +8,7 @@ var mtgModule = {
     ],
 
     onMessage: function (query, parameters) {
+        var message = this.message;
         var mtgCallback = function (err, result) {
             if (err) {
                 console.error(err);

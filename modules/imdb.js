@@ -8,6 +8,7 @@ var imdbModule = {
     ],
 
     onMessage: function (query, parameters) {
+        var message = this.message;
         var imdbCallback = function (err, results) {
             if (err) {
                 console.error(err);

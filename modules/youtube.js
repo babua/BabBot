@@ -9,6 +9,7 @@ var youtubeModule = {
     ],
 
     onMessage: function (query, parameters) {
+        var message = this.message;
         var youtubeCallback = function (err, results) {
             if (err) {
                 console.error(err);

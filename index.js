@@ -8,8 +8,9 @@ var normalizedPath = path.join(__dirname, 'modules');
 var modules = fs.readdirSync(normalizedPath).map(function (file) {
     return require('./modules/' + file);
 });
+console.log(modules);
 
-var bot = new Bot({
+bot = new Bot({
     token: config.telegram.token
 })
 .on('message', function (message) {
@@ -24,11 +25,12 @@ var bot = new Bot({
         command = command.substr(0, atIndex);
     }
 
-    this.modules.forEach(function (item) {
+    modules.forEach(function (item) {
         if (item.commands.indexOf(command) === -1) {
             return;
         }
-
+        
+        item.message = message;
         item.onMessage(message.text.substr(parameters[0].length).trim());
     })
 })

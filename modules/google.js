@@ -8,6 +8,7 @@ var googleModule = {
     ],
 
     onMessage: function (query, parameters) {
+        var message = this.message;
         var googleCallback = function (err, next, results) {
             if (err) {
                 console.error(err);
