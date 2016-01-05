@@ -53,14 +53,6 @@ var imdbModule = {
                         }
                     }
                 );
-
-                bot.sendChatAction(
-                    {
-                        chat_id: message.chat.id,
-                        action: 'typing'
-                    },
-                    function (nodifiedPromise) {}
-                );
             } else {
                 bot.sendMessage(
                     {
