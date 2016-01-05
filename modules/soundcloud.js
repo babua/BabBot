@@ -16,46 +16,27 @@ var soundcloudModule = {
         'sc'
     ],
 
-    onMessage: function (query, parameters) {
-        var message = this.message;
+    onCommand: function (command, query, platform, state) {
         var soundcloudCallback = function (err, results) {
             if (err) {
-                console.error(err);
+                platform.error(err, state);
                 return;
             }
 
             var result = results[0];
             
-            console.log(result);
+            platform.debug(result, state);
 
             if (result !== undefined && result.hasOwnProperty('title') && result.hasOwnProperty('permalink_url')) {
                 var resultText = result.title + '\n' + result.permalink_url;
 
-                bot.sendMessage(
-                    {
-                        chat_id: message.chat.id,
-                        text: resultText
-                    },
-                    function (nodifiedPromise) {}
-                );
+                platform.message(resultText, state);
             } else {
-                bot.sendMessage(
-                    {
-                        chat_id: message.chat.id,
-                        text: 'Soundcloud\'da "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯'
-                    },
-                    function (nodifiedPromise) {}
-                );
+                platform.failMessage('Soundcloud\'da "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯', state);
             }
         };
         
-        bot.sendChatAction(
-            {
-                chat_id: this.message.chat.id,
-                action: 'typing'
-            },
-            function (nodifiedPromise) {}
-        );
+        platform.typing(state);
 
         soundcloud.get(
             '/tracks',

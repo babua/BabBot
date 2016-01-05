@@ -1,37 +1,14 @@
-var Bot = require('node-telegram-bot');
-    path = require('path'),
-    fs = require('fs'),
-    config = require('./config/config.js');
+'use strict';
 
-var normalizedPath = path.join(__dirname, 'modules');
+var babbot = require('./babbot.js');
 
-var modules = fs.readdirSync(normalizedPath).map(function (file) {
-    return require('./modules/' + file);
-});
-console.log(modules);
+var processParameters = process.argv.slice(1),
+    targetPlatform;
 
-bot = new Bot({
-    token: config.telegram.token
-})
-.on('message', function (message) {
-    var parameters = message.text.split(' ');
+if (processParameters.indexOf('-c') !== -1) {
+    targetPlatform = require('./platforms/console.js');
+} else {
+    targetPlatform = require('./platforms/telegram.js');
+}
 
-    console.log(parameters);
-
-    var command = parameters[0].substr(1),
-        atIndex = command.indexOf('@');
-
-    if (atIndex !== -1) {
-        command = command.substr(0, atIndex);
-    }
-
-    modules.forEach(function (item) {
-        if (item.commands.indexOf(command) === -1) {
-            return;
-        }
-        
-        item.message = message;
-        item.onMessage(message.text.substr(parameters[0].length).trim());
-    })
-})
-.start();
+var platformInstance = new targetPlatform(new babbot());
