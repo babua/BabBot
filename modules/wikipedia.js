@@ -12,11 +12,10 @@ var wikipediaModule = {
         'wp'
     ],
 
-    onMessage: function (query, parameters) {
-        var message = this.message;
+    onCommand: function (command, query, platform, state) {
         var wikipediaCallback = function (err, results) {
             if (err) {
-                console.error(err);
+                platform.error(err, state);
                 return;
             }
 
@@ -28,7 +27,7 @@ var wikipediaModule = {
                         'https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&pageids=' + page.pageid,
                         function (err2, response, body) {
                             if (err2) {
-                                console.error(err);
+                                platform.error(err, state);
                                 return;
                             }
 
@@ -38,51 +37,21 @@ var wikipediaModule = {
                                 var title = page2[Object.keys(page2)[0]].title;
                                 var resultText = title + '\n' + fullUrl;
 
-                                bot.sendMessage(
-                                    {
-                                        chat_id: message.chat.id,
-                                        text: resultText
-                                    },
-                                    function (nodifiedPromise) {}
-                                );
+                                platform.message(resultText, state);
                             } else {
-                                bot.sendMessage(
-                                    {
-                                        chat_id: message.chat.id,
-                                        text: 'Wikipedia şu an müsait değil  ' + message.from.first_name + ' ¯\\_(ツ)_/¯'
-                                    },
-                                    function (nodifiedPromise) {}
-                                );
+                                platform.failMessage('Wikipedia şu an müsait değil  ' + message.from.first_name + ' ¯\\_(ツ)_/¯');
                             }
                         }
                     );
 
-                    bot.sendChatAction(
-                        {
-                            chat_id: message.chat.id,
-                            action: 'typing'
-                        },
-                        function (nodifiedPromise) {}
-                    );
+                    platform.typing(state);
                 } else {
-                    bot.sendMessage(
-                        {
-                            chat_id: message.chat.id,
-                            text: 'Wikipedia\'da "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯'
-                        },
-                        function (nodifiedPromise) {}
-                    );
+                    platform.failMessage('Wikipedia\'da "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯', state);
                 }
             }
         };
 
-        bot.sendChatAction(
-            {
-                chat_id: message.chat.id,
-                action: 'typing'
-            },
-            function (nodifiedPromise) {}
-        );
+        platform.typing(state);
 
         wikipedia.searchArticle(
             {

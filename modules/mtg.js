@@ -7,15 +7,14 @@ var mtgModule = {
         'mtg'
     ],
 
-    onMessage: function (query, parameters) {
-        var message = this.message;
+    onCommand: function (command, query, platform, state) {
         var mtgCallback = function (err, result) {
             if (err) {
-                console.error(err);
+                platform.error(err, state);
                 return;
             }
 
-            console.log(result);
+            platform.debug(result, state);
 
             var resultText = result.name + ' | ' + result.mana_cost + ' \n';
 
@@ -37,22 +36,10 @@ var mtgModule = {
             resultText += '\n';
             resultText += result.image_url;
 
-            bot.sendMessage(
-                {
-                    chat_id: message.chat.id,
-                    text: resultText
-                },
-                function (nodifiedPromise) {}
-            );
+            platform.message(resultText, state);
         };
 
-        bot.sendChatAction(
-            {
-                chat_id: message.chat.id,
-                action: 'typing'
-            },
-            function (nodifiedPromise) {}
-        );
+        platform.typing(state);
 
         tutor.card(query, mtgCallback);
     }

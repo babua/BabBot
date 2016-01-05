@@ -8,43 +8,24 @@ var youtubeModule = {
         'yt'
     ],
 
-    onMessage: function (query, parameters) {
-        var message = this.message;
+    onCommand: function (command, query, platform, state) {
         var youtubeCallback = function (err, results) {
             if (err) {
-                console.error(err);
+                platform.error(err, state);
                 return;
             }
 
-            console.log(results);
+            platform.debug(results, state);
 
             if (results.length > 0) {
                 var result = results[0];
-                bot.sendMessage(
-                    {
-                        chat_id: message.chat.id,
-                        text: '| ' + result.title + ' |\n' + result.link
-                    },
-                    function (nodifiedPromise) {}
-                );
+                platform.message('| ' + result.title + ' |\n' + result.link, state);
             } else {
-                bot.sendMessage(
-                    {
-                        chat_id: message.chat.id,
-                        text: 'Youtube\'da "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯'
-                    },
-                    function (nodifiedPromise) {}
-                );
+                platform.failMessage('Youtube\'da "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯', state);
             }
         };
 
-        bot.sendChatAction(
-            {
-                chat_id: message.chat.id,
-                action: 'typing'
-            },
-            function (nodifiedPromise) {}
-        );
+        platform.typing(state);
 
         youtube(
             query,

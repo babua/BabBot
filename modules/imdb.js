@@ -7,19 +7,18 @@ var imdbModule = {
         'imdb'
     ],
 
-    onMessage: function (query, parameters) {
-        var message = this.message;
+    onCommand: function (command, query, platform, state) {
         var imdbCallback = function (err, results) {
             if (err) {
-                console.error(err);
+                platform.error(err, state);
                 return;
             }
 
-            console.log(results);
+            platform.debug(results, state);
 
             if (results.length > 0) {
                 results.forEach(function (movie) {
-                    console.log('%s (%d)', movie.title, movie.year);
+                    platform.debug('%s (%d)', movie.title, movie.year, state);
                 });
 
                 var result = results[0];
@@ -32,7 +31,7 @@ var imdbModule = {
                     true,
                     function (err2, result2) {
                         if (err2) {
-                            console.error(err2);
+                            platform.error(err2, state);
                             return;
                         }
 
@@ -43,34 +42,16 @@ var imdbModule = {
 
                             var resultText = result2.title + ' ('  + result2.year + ') | ' + result2.imdb.rating + ' | ' + numberWithCommas(result2.imdb.votes) + ' votes\n' + 'http://www.imdb.com/title/' + result2.imdb.id;
 
-                            bot.sendMessage(
-                                {
-                                    chat_id: message.chat.id,
-                                    text: resultText
-                                },
-                                function (nodifiedPromise) {}
-                            );
+                            platform.message(resultText, state);
                         }
                     }
                 );
             } else {
-                bot.sendMessage(
-                    {
-                        chat_id: message.chat.id,
-                        text: 'Imdb\'de "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯'
-                    },
-                    function (nodifiedPromise) {}
-                );
+                platform.failMessage('Imdb\'de "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯', state);
             }
         };
 
-        bot.sendChatAction(
-            {
-                chat_id: message.chat.id,
-                action: 'typing'
-            },
-            function (nodifiedPromise) {}
-        );
+        platform.typing(state);
 
         omdb.search(query, imdbCallback);
     }
