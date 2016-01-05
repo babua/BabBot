@@ -27,7 +27,7 @@ var wikipediaModule = {
                         'https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json&pageids=' + page.pageid,
                         function (err2, response, body) {
                             if (err2) {
-                                platform.error(err, state);
+                                platform.error(err2, state);
                                 return;
                             }
 
