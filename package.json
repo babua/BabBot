@@ -1,16 +1,17 @@
 {
-	"name": "BabBot",
-	"version": "0.0.1",
-	"description": "Eylencelik Telaaaram Botu",
-	"dependencies": {
-		"node-telegram-bot" : "latest",
-		"youtube-search" : "latest",
-		"tutor" : "latest",
-		"request" : "latest",
-		"tough-cookie" : "latest",
-		"soundcloud-nodejs-api-wrapper" : "latest",
-		"omdb" : "latest",
-		"google" : "latest",
-		"wikipedia-js" : "latest"
-	}
+  "name": "BabBot",
+  "version": "0.0.1",
+  "description": "Eylencelik Telaaaram Botu",
+  "dependencies": {
+    "cheerio": "^0.19.0",
+    "google": "latest",
+    "node-telegram-bot": "latest",
+    "omdb": "latest",
+    "request": "latest",
+    "soundcloud-nodejs-api-wrapper": "latest",
+    "tough-cookie": "latest",
+    "tutor": "latest",
+    "wikipedia-js": "latest",
+    "youtube-search": "latest"
+  }
 }
