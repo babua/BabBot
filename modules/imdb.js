@@ -47,7 +47,7 @@ var imdbModule = {
                     }
                 );
             } else {
-                platform.failMessage('Imdb\'de "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯', state);
+                platform.failMessage('Imdb\'de "' + query + '" diye bişey bulamadım  ' + state.message.from.first_name + ' ¯\\_(ツ)_/¯', state);
             }
         };
 

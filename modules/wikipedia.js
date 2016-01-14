@@ -39,14 +39,14 @@ var wikipediaModule = {
 
                                 platform.message(resultText, state);
                             } else {
-                                platform.failMessage('Wikipedia şu an müsait değil  ' + message.from.first_name + ' ¯\\_(ツ)_/¯');
+                                platform.failMessage('Wikipedia şu an müsait değil  ' + state.message.from.first_name + ' ¯\\_(ツ)_/¯');
                             }
                         }
                     );
 
                     platform.typing(state);
                 } else {
-                    platform.failMessage('Wikipedia\'da "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯', state);
+                    platform.failMessage('Wikipedia\'da "' + query + '" diye bişey bulamadım  ' + state.message.from.first_name + ' ¯\\_(ツ)_/¯', state);
                 }
             }
         };

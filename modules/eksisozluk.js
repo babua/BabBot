@@ -41,14 +41,14 @@ var eksisozlukModule = {
 
                             platform.message(resultText, state);
                         } else {
-                            platform.failMessage('eksisozluk şu an müsait değil  ' + message.from.first_name + ' ¯\\_(ツ)_/¯');
+                            platform.failMessage('eksisozluk şu an müsait değil  ' + state.message.from.first_name + ' ¯\\_(ツ)_/¯');
                         }
                     }
                 );
 
                 platform.typing(state);
             } else {
-                platform.failMessage('Eksi Sozluk\'de "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯', state);
+                platform.failMessage('Eksi Sozluk\'de "' + query + '" diye bişey bulamadım  ' + state.message.from.first_name + ' ¯\\_(ツ)_/¯', state);
             }
         };
 

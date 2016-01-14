@@ -21,7 +21,7 @@ var youtubeModule = {
                 var result = results[0];
                 platform.message('| ' + result.title + ' |\n' + result.link, state);
             } else {
-                platform.failMessage('Youtube\'da "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯', state);
+                platform.failMessage('Youtube\'da "' + query + '" diye bişey bulamadım  ' + state.message.from.first_name + ' ¯\\_(ツ)_/¯', state);
             }
         };
 

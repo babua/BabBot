@@ -22,7 +22,7 @@ var googleModule = {
 
                 platform.message(resultText, state);
             } else {
-                platform.failMessage('Google\'da "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯'. state);
+                platform.failMessage('Google\'da "' + query + '" diye bişey bulamadım  ' + state.message.from.first_name + ' ¯\\_(ツ)_/¯'. state);
             }
         };
 

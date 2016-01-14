@@ -32,7 +32,7 @@ var soundcloudModule = {
 
                 platform.message(resultText, state);
             } else {
-                platform.failMessage('Soundcloud\'da "' + query + '" diye bişey bulamadım  ' + message.from.first_name + ' ¯\\_(ツ)_/¯', state);
+                platform.failMessage('Soundcloud\'da "' + query + '" diye bişey bulamadım  ' + state.message.from.first_name + ' ¯\\_(ツ)_/¯', state);
             }
         };
         
