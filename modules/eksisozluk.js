@@ -29,11 +29,17 @@ var eksisozlukModule = {
                         }
 
                         if (response2.statusCode == 200) {
-                            var $ = cheerio.load(body2);
+                            var bodyWithBreaks = body2.replace(/\<br[^\>]*\>/gi, '\n'); // hack
+                            var $ = cheerio.load(bodyWithBreaks);
+
+                            var header = $('#title');
 
                             var firstLi = $('#entry-list').children().first();
 
-                            var resultText = firstLi.find('.content').text() +
+                            var resultText =
+                                header.text().trim() +
+                                '\n\n' +
+                                firstLi.find('.content').text() +
                                 '\n\n' +
                                 firstLi.find('.entry-date').text() +
                                 ' // ' +
