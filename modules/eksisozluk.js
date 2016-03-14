@@ -29,8 +29,9 @@ var eksisozlukModule = {
                         }
 
                         if (response2.statusCode == 200) {
-                            var bodyWithBreaks = body2.replace(/\<br[^\>]*\>/gi, '\n'); // hack
-                            var $ = cheerio.load(bodyWithBreaks);
+                            var bodyWithBreaksAndTrimmedLinks = body2.replace(/\<br[^\>]*\>/gi, '\n')
+                                .replace(/<a([^>]* )href="([^"]+)">([^"]+)<\/a>/gi, '$2'); // hack
+                            var $ = cheerio.load(bodyWithBreaksAndTrimmedLinks);
 
                             var header = $('#title');
 
