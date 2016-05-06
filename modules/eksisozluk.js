@@ -29,11 +29,18 @@ var eksisozlukModule = {
                         }
 
                         if (response2.statusCode == 200) {
-                            var $ = cheerio.load(body2);
+                            var bodyWithBreaksAndTrimmedLinks = body2.replace(/\<br[^\>]*\>/gi, '\n')
+                                .replace(/<a([^>]* )href="([^"]+)">([^"]+)<\/a>/gi, '$2'); // hack
+                            var $ = cheerio.load(bodyWithBreaksAndTrimmedLinks);
+
+                            var header = $('#title');
 
                             var firstLi = $('#entry-list').children().first();
 
-                            var resultText = firstLi.find('.content').text() +
+                            var resultText =
+                                header.text().trim() +
+                                '\n\n' +
+                                firstLi.find('.content').text() +
                                 '\n\n' +
                                 firstLi.find('.entry-date').text() +
                                 ' // ' +

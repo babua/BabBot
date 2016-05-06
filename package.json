@@ -13,5 +13,8 @@
     "tutor": "latest",
     "wikipedia-js": "latest",
     "youtube-search": "latest"
+  },
+  "scripts": {
+    "start": "node index.js -c"
   }
 }
