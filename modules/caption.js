@@ -28,10 +28,10 @@ var captionModule = {
 
         if(secondLine === "")
         {
-            var resultText = "http://memegen.link/custom/" + firstLine +".jpg?alt=" + image;
+            var resultText = "http://memegen.link/custom/" + encodeURIComponent(firstLine) +".jpg?alt=" + image;
         } else 
             {
-                var resultText = "http://memegen.link/custom/"+ firstLine +"/"+ secondLine +".jpg?alt=" + image;
+                var resultText = "http://memegen.link/custom/"+ encodeURIComponent(firstLine) +"/"+ encodeURIComponent(secondLine) +".jpg?alt=" + image;
             }
         
         platform.message( encodeURI(resultText), state);
