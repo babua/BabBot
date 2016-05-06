@@ -34,7 +34,7 @@ var captionModule = {
                 var resultText = "http://memegen.link/custom/"+ firstLine +"/"+ secondLine +".jpg?alt=" + image;
             }
         
-        platform.message( resultText, state);
+        platform.message( encodeURI(resultText), state);
 
         
     }
