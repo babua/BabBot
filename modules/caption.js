@@ -43,13 +43,13 @@ var captionModule = {
         urlExists(image, function(err, exists) {
           if(exists)
           {
-            platform.message(buildResultText(firstLine, secondLine, image);, state);
+            platform.message(buildResultText(firstLine, secondLine, image), state);
           } else 
             {
                 if(image.indexOf(".") === -1){
                     //tag entered instead of URL, send predefined image
                     image = config.imagehost.url + image + ".jpg";
-                    platform.message(buildResultText(firstLine, secondLine, image);, state);
+                    platform.message(buildResultText(firstLine, secondLine, image), state);
                 } else {
                     platform.message("Image not found", state);
                 }
