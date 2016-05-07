@@ -12,7 +12,8 @@
     "tough-cookie": "latest",
     "tutor": "latest",
     "wikipedia-js": "latest",
-    "youtube-search": "latest"
+    "youtube-search": "latest",
+    "url-exists" : "latest"
   },
   "scripts": {
     "start": "node index.js -c"

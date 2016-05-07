@@ -1,5 +1,8 @@
 'use strict';
 
+var urlExists = require('url-exists'),
+    config = require('../config/config.js');
+
 var captionModule = {
     commands: [
         'cap'
@@ -8,6 +11,16 @@ var captionModule = {
     onCommand: function (command, query, platform, state) {
 
         platform.typing(state);
+
+        var buildResultText = function(firstLine, secondLine, image){
+            if(secondLine === "")
+            {
+                return "http://memegen.link/custom/" + encodeURIComponent(firstLine) +".jpg?alt=" + image;
+            } else 
+                {
+                    return "http://memegen.link/custom/"+ encodeURIComponent(firstLine) +"/"+ encodeURIComponent(secondLine) +".jpg?alt=" + image;
+                }
+        }
 
         var tokens = query.split("|");
         var secondLine = "";
@@ -26,15 +39,26 @@ var captionModule = {
         //todo: check valid url
         //todo: predefined image library
 
-        if(secondLine === "")
-        {
-            var resultText = "http://memegen.link/custom/" + encodeURIComponent(firstLine) +".jpg?alt=" + image;
-        } else 
+
+        urlExists(image, function(err, exists) {
+          if(exists)
+          {
+            platform.message(buildResultText(firstLine, secondLine, image);, state);
+          } else 
             {
-                var resultText = "http://memegen.link/custom/"+ encodeURIComponent(firstLine) +"/"+ encodeURIComponent(secondLine) +".jpg?alt=" + image;
+                if(image.indexOf(".") === -1){
+                    //tag entered instead of URL, send predefined image
+                    image = config.imagehost.url + image + ".jpg";
+                    platform.message(buildResultText(firstLine, secondLine, image);, state);
+                } else {
+                    platform.message("Image not found", state);
+                }
             }
+        });
+
+
         
-        platform.message(resultText, state);
+        
 
         
     }

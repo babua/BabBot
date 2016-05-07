@@ -14,6 +14,8 @@ module.exports = {
         clientSecret: 'soundcloudClientSecret',
         redirectUri: 'soundcloudRedirectUri'
     },
-
+    imagehost : {
+        url : 'http://predefinedimageho.st/imagesFolder/'
+    },
     db: 'mongodb://localhost/babbot'
 };
