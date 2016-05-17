@@ -15,7 +15,9 @@
     "youtube-search": "latest",
     "url-exists" : "latest",
     "node-readability": "latest",
-    "html-to-text": "latest"
+    "html-to-text": "latest",
+    "url-exists": "latest",
+    "async": "latest"
   },
   "scripts": {
     "start": "node index.js -c"
