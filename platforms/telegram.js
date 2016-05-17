@@ -22,7 +22,8 @@ var telegramPlatform = function (babbot) {
             {
                 chat_id: state.message.chat.id,
                 text: text,
-                reply_to_message_id: state.message.message_id
+                reply_to_message_id: state.message.message_id,
+                parse_mode: "Markdown"
             },
             function (nodifiedPromise) {
             }
@@ -34,7 +35,8 @@ var telegramPlatform = function (babbot) {
             {
                 chat_id: state.message.chat.id,
                 text: text,
-                reply_to_message_id: state.message.message_id
+                reply_to_message_id: state.message.message_id,
+                parse_mode: "Markdown"
             },
             function (nodifiedPromise) {
             }
