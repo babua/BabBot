@@ -18,16 +18,31 @@ var telegramPlatform = function (babbot) {
     };
 
     self.message = function (text, state) {
+        var whenDone = function(nodifiedPromise) {};
+        if(text.length > 4096) //This is an undocumented maximum message length of the Telegram API. Message sending will fail without exceptions if anything longer than this is sent
+        {
+            var lineBreak = text.lastIndexOf("\n",4096);
+            if(lineBreak === -1)
+            {
+                var remainder = text.slice(4096,text.length-1);
+                text = text.slice(0,4096);
+            } else {
+                var remainder = text.slice(lineBreak+1,text.length-1);
+                text = text.slice(0,lineBreak);
+            }
+            var whenDone = function(nodifiedPromise){
+                self.message(remainder,state);
+            }
+        }
+
         self.botInstance.sendMessage(
             {
                 chat_id: state.message.chat.id,
                 text: text,
                 reply_to_message_id: state.message.message_id,
-                parse_mode: "Markdown"
             },
-            function (nodifiedPromise) {
-            }
-        );
+            whenDone
+        ); 
     };
 
     self.failMessage = function (text, state) {
@@ -36,7 +51,6 @@ var telegramPlatform = function (babbot) {
                 chat_id: state.message.chat.id,
                 text: text,
                 reply_to_message_id: state.message.message_id,
-                parse_mode: "Markdown"
             },
             function (nodifiedPromise) {
             }

@@ -1,7 +1,7 @@
 'use strict';
 
 var readability = require('node-readability'),
-    upndown = require('upndown'),
+    htmlToText = require('html-to-text'),
     urlExists = require('url-exists');
 
 var readabilityModule = {
@@ -11,9 +11,6 @@ var readabilityModule = {
 
     onCommand: function (command, query, platform, state) {
 
-        var und = new upndown();
-
-
         var readabilityCallback = function (err, article) {
             if (err) {
                 platform.error(err, state);
@@ -21,19 +18,14 @@ var readabilityModule = {
             }
 
             if(article.content === false){
-
+                platform.failMessage("Bu sayfanın içeriğini ayıklayamadım " + state.message.from.first_name + ' ¯\\_(ツ)_/¯');    
             } else {
-                // platform.message(article.textBody,state);
-            }
-            // platform.debug(article, state);
-            
-            und.convert(article.content, function(err, markdown) {
-                if (err) {
-                    console.err(err);
-                } else {
-                    platform.message(markdown,state);
-                }
-            });
+                var text = htmlToText.fromString(article.content, {
+                    wordwrap: false
+                });
+                console.log(text);
+                platform.message(text,state);
+            }    
         };
         platform.typing(state);
 
@@ -42,13 +34,9 @@ var readabilityModule = {
             {
                 readability(query,readabilityCallback);
             } else {
-                platform.message("Böyle bi URL bulamadım " + state.message.from.first_name + ' ¯\\_(ツ)_/¯');
+                platform.failMessage("Böyle bi URL bulamadım " + state.message.from.first_name + ' ¯\\_(ツ)_/¯');
             }
         });
-
-        
-        //TODO check valid url
-        
     }
 };
 
