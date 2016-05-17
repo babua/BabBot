@@ -13,7 +13,9 @@
     "tutor": "latest",
     "wikipedia-js": "latest",
     "youtube-search": "latest",
-    "url-exists" : "latest"
+    "url-exists" : "latest",
+    "node-readability": "latest",
+    "upndown": "latest"
   },
   "scripts": {
     "start": "node index.js -c"
