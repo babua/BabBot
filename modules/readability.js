@@ -30,7 +30,7 @@ var readabilityModule = {
                 }
                 function sendText(platform, state, text, callback) {
                     if(text.length > 4096 * 3){
-                        platform.message("Bu çok uzunmuş, yollamayayım (`gözüm üstünde Koray ಠ_ಠ)",state);
+                        platform.message("Bu çok uzunmuş, yollamayayım (gözüm üstünde Koray ಠ_ಠ)",state);
                     } else {
                         platform.message(text,state);    
                     }
