@@ -21,7 +21,8 @@ var telegramPlatform = function (babbot) {
         self.botInstance.sendMessage(
             {
                 chat_id: state.message.chat.id,
-                text: text
+                text: text,
+                reply_to_message_id: state.message.message_id
             },
             function (nodifiedPromise) {
             }
@@ -32,7 +33,8 @@ var telegramPlatform = function (babbot) {
         self.botInstance.sendMessage(
             {
                 chat_id: state.message.chat.id,
-                text: text
+                text: text,
+                reply_to_message_id: state.message.message_id
             },
             function (nodifiedPromise) {
             }
