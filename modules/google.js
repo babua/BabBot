@@ -15,7 +15,11 @@ var googleModule = {
             }
 
             platform.debug(results, state);
-
+            if(results === undefined){
+                platform.error("Google callback returned undefined",state);
+                platform.failMessage("Google'a ulaşamadım veya bişiyler ters gitti " + state.message.from.first_name + ' ¯\\_(ツ)_/¯', state);
+                return;
+            }
             if (results.length > 0) {
                 var result = results[0];
                 var resultText = result.title + '\n\n' + result.description + '\n' + result.link;
