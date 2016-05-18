@@ -17,7 +17,8 @@
     "node-readability": "latest",
     "html-to-text": "latest",
     "url-exists": "latest",
-    "async": "latest"
+    "async": "latest",
+    "node-summary": "latest"
   },
   "scripts": {
     "start": "node index.js -c"

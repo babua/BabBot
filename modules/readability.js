@@ -2,11 +2,13 @@
 
 var readability = require('node-readability'),
     htmlToText = require('html-to-text'),
-    async = require("async");
+    async = require("async"),
+    summaryTool = require('node-summary');
 
 var readabilityModule = {
     commands: [
-        'read'
+        'read',
+        'summ'
     ],
 
     onCommand: function (command, query, platform, state) {
@@ -21,11 +23,20 @@ var readabilityModule = {
                 platform.failMessage("Bu sayfanın içeriğini ayıklayamadım " + state.message.from.first_name + ' ¯\\_(ツ)_/¯',state);    
             } else {
 
-                function convertToText(platform, state, articleContent, callback) {
-                    var text = htmlToText.fromString(articleContent, {
+                function convertToText(platform, state, article, command, callback) {
+                    var text = htmlToText.fromString(article.content, {
                         wordwrap: false
                     });
 
+                    if(command === "summ"){
+                        summaryTool.summarize(article.title, text, function(err, summary) {
+                            if(err) {
+                                platform.error(err,state);
+                            } else {
+                                text = summary;
+                            }
+                        });
+                    }
                     callback(null, platform, state, text);
                 }
                 function sendText(platform, state, text, callback) {
@@ -38,7 +49,7 @@ var readabilityModule = {
                 }
 
                 async.waterfall([
-                    async.apply(convertToText, platform, state, article.content),
+                    async.apply(convertToText, platform, state, article, command),
                     sendText
                 ], function (err, result) {
                 });
