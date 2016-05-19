@@ -63,7 +63,7 @@ var captionModule = {
             }
             var tags = "";
             files.map(function (file) {
-                return path.join(p, file);
+                return path.join(config.imagehost.imagePath, file);
             }).filter(function (file) {
                 return fs.statSync(file).isFile();
             }).forEach(function (file) {
