@@ -1,7 +1,9 @@
 'use strict';
 
 var urlExists = require('url-exists'),
-    config = require('../config/config.js');
+    config = require('../config/config.js'),
+    fs = require("fs"),
+    path = require("path");
 
 var captionModule = {
     commands: [
