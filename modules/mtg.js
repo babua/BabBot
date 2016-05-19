@@ -8,6 +8,7 @@ var mtgModule = {
     ],
 
     onCommand: function (command, query, platform, state) {
+        if(query === undefined) return;
         var mtgCallback = function (err, result) {
             if (err) {
                 platform.error(err, state);
