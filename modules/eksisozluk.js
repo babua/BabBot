@@ -13,6 +13,7 @@ var eksisozlukModule = {
     ],
 
     onCommand: function (command, query, platform, state) {
+        if(query === undefined) return;
         var eksisozlukCallback = function (err, response, body) {
             if (err) {
                 platform.error(err, state);

@@ -9,6 +9,8 @@ var youtubeModule = {
     ],
 
     onCommand: function (command, query, platform, state) {
+        if(query === undefined) return;
+        
         var youtubeCallback = function (err, results) {
             if (err) {
                 platform.error(err, state);

@@ -12,7 +12,8 @@ var readabilityModule = {
     ],
 
     onCommand: function (command, query, platform, state) {
-
+        if(query === undefined) return;
+        
         var readabilityCallback = function (err, article) {
             if (err) {
                 platform.error(err, state);

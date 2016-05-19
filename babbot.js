@@ -22,7 +22,7 @@ var babbot = function () {
         }
         
         
-        if(command !== undefined && query !== undefined){
+        if(command !== undefined){
             self.modules.forEach(function (item) {
             if (item.commands.indexOf(command) === -1) {
                 return;

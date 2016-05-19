@@ -17,6 +17,8 @@ var soundcloudModule = {
     ],
 
     onCommand: function (command, query, platform, state) {
+        if(query === undefined) return;
+        
         var soundcloudCallback = function (err, results) {
             if (err) {
                 platform.error(err, state);

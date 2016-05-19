@@ -13,6 +13,8 @@ var wikipediaModule = {
     ],
 
     onCommand: function (command, query, platform, state) {
+        if(query === undefined) return;
+        
         var wikipediaCallback = function (err, results) {
             if (err) {
                 platform.error(err, state);

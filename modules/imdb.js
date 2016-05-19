@@ -8,6 +8,7 @@ var imdbModule = {
     ],
 
     onCommand: function (command, query, platform, state) {
+        if(query === undefined) return;
         var imdbCallback = function (err, results) {
             if (err) {
                 platform.error(err, state);
