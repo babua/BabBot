@@ -20,8 +20,21 @@ var youtubeModule = {
             platform.debug(results, state);
 
             if (results.length > 0) {
-                var result = results[0];
-                platform.message('| ' + result.title + ' |\n' + result.link, state);
+                var filteredResults = results.filter(function(value){
+                    if(value.kind === "youtube#video"){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+                if(filteredResults.length > 0)
+                {
+                    var result = filteredResults[0];
+                    platform.message('| ' + result.title + ' |\n' + result.link, state);
+                } else {
+                    platform.failMessage('Youtube\'da "' + query + '" diye bi vidyo bulamadım  ' + state.message.from.first_name + ' ¯\\_(ツ)_/¯ (ama birtakim playlistler olabilir, sen yine kendin bi bak)', state);
+                }
+                
             } else {
                 platform.failMessage('Youtube\'da "' + query + '" diye bişey bulamadım  ' + state.message.from.first_name + ' ¯\\_(ツ)_/¯', state);
             }
@@ -32,7 +45,7 @@ var youtubeModule = {
         youtube(
             query,
             {
-                maxResults: 1,
+                maxResults: 5,
                 key: config.youtube.key
             },
             youtubeCallback
