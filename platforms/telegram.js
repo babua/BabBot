@@ -68,17 +68,20 @@ var telegramPlatform = function (babbot) {
     self.botInstance = new Bot({ token: config.telegram.token });
 
     self.botInstance.on('message', function (message) {
-        if(message.text){
-            var parameters = message.text.split(' ');
+        if(message !== undefined)
+        {
+            if(message.text){
+                var parameters = message.text.split(' ');
+            }
+            var state = {
+                message: message,
+                parameters : parameters
+            };
+
+            self.debug(state);
+
+            babbot.onMessage(self, state.parameters, state);
         }
-        var state = {
-            message: message,
-            parameters : parameters
-        };
-
-        self.debug(state);
-
-        babbot.onMessage(self, state.parameters, state);
     });
 
     self.botInstance.start();
