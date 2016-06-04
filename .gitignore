@@ -36,3 +36,4 @@ node_modules
 # Configuration and tokens
 config/config.js
 
+tmpImages/*
