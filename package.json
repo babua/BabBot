@@ -18,7 +18,9 @@
     "html-to-text": "latest",
     "url-exists": "latest",
     "async": "latest",
-    "node-summary": "latest"
+    "node-summary": "latest",
+    "impurge" : "latest",
+    "imgur-save" : "latest"
   },
   "scripts": {
     "start": "node index.js -c"
