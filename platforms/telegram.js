@@ -57,6 +57,56 @@ var telegramPlatform = function (babbot) {
         );
     };
 
+    self.image = function(path,state){
+        console.log(path);
+        if(path !== undefined)
+        {
+            if(Array.isArray(path))
+            {
+                var sendImageChain = function imgChain(botInstance,paths,prevMsg){
+                    if(paths.length > 0)
+                    {
+                        botInstance.sendPhoto(
+                        {
+                            chat_id: prevMsg.chat.id,
+                            reply_to_message_id: prevMsg.message_id,
+                            //caption: 'Telegram Logo',
+                            files: {
+                                photo: paths[0]
+                            }
+                        }, 
+                            function (err, msg) 
+                            {
+                                console.log(err);
+                                console.log(msg);
+                                paths.splice(0,1);
+                                imgChain(botInstance,paths,msg);
+                            }
+                        );
+                    } else return
+                };
+
+                sendImageChain(self.botInstance,path,state.message);
+
+            } else {
+                self.botInstance.sendPhoto(
+                {
+                    chat_id: state.message.chat.id,
+                    reply_to_message_id: state.message.message_id,
+                    //caption: 'Telegram Logo',
+                    files: {
+                        photo: path
+                    }
+                }, 
+                    function (err, msg) 
+                    {
+                        console.log(err);
+                        console.log(msg);
+                    }
+                );
+            }
+        }
+    };
     self.debug = function (obj, state) {
         console.log(obj);
     };
