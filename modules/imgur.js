@@ -17,6 +17,7 @@ var imgModule = {
                 console.log(r);
                 imgurSave(r, "./tmpImages/", 'babbot', function(err, results) {
                     if (!err){
+                        if(r.length === 2 && (r[0] === r[1]) ) r.splice(0,1);
                         var paths = [];
                         // console.log(r);
                         r.forEach(function(element, index, array){
