@@ -14,12 +14,10 @@ var imgModule = {
         if(impurge.is_imgur(query))
         {
             impurge.purge(query, function  (e,r) {
-                console.log(r);
+                r = Array.from(new Set(r)); //unique-ifies the array
                 imgurSave(r, "./tmpImages/", 'babbot', function(err, results) {
                     if (!err){
-                        if(r.length === 2 && (r[0] === r[1]) ) r.splice(0,1);
                         var paths = [];
-                        // console.log(r);
                         r.forEach(function(element, index, array){
                             var path = "./tmpImages/babbot_" + element.substring(element.lastIndexOf('/')+1);
                             paths.push(path);
