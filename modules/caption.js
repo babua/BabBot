@@ -10,7 +10,7 @@ var urlExists = require('url-exists'),
 
 
 var saveAndSendImage = function(imageUrl, platform, state){
-
+    console.log(imageUrl);
     var newFileName = uuid.v1() + path.extname(imageUrl);
     //Download the file to tmp folder, rename to unique id
     download(imageUrl, {
@@ -72,6 +72,7 @@ var captionModule = {
                     platform.message("URL gömmeye çalışmayın arlaksızlar v__v",state);
                 } else {
                     urlExists(image, function(err, exists) {
+                        console.log(exists);
                       if(exists)
                       {
                         saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
@@ -82,7 +83,7 @@ var captionModule = {
                                 image = config.imagehost.url + image + ".jpg";
                                 saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
                             } else {
-                                platform.message("Image not found", state);
+                                platform.message("Bu verdiğin adresten resme ulaşamadım", state);
                             }
                         }
                     });
