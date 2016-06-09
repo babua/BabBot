@@ -60,7 +60,7 @@ var captionModule = {
                 var firstLine = tokens.join("-");
 
                 if(isUrl(firstLine) || isUrl(secondLine)){
-                    platform.message("URL gömmeye çalışmayın arlaksızlar v__v");
+                    platform.message("URL gömmeye çalışmayın arlaksızlar v__v",state);
                 } else {
                     urlExists(image, function(err, exists) {
                       if(exists)

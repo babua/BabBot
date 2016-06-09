@@ -34,17 +34,14 @@ var telegramPlatform = function (babbot) {
                 self.message(remainder,state);
             }
         }
-        if(state !== undefined){
-            self.botInstance.sendMessage(
-                {
-                    chat_id: state.message.chat.id,
-                    text: text,
-                    reply_to_message_id: state.message.message_id,
-                },
-                whenDone
-            );
-        }
- 
+        self.botInstance.sendMessage(
+            {
+                chat_id: state.message.chat.id,
+                text: text,
+                reply_to_message_id: state.message.message_id,
+            },
+            whenDone
+        );
     };
 
     self.failMessage = function (text, state) {
