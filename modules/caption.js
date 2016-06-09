@@ -12,6 +12,7 @@ var urlExists = require('url-exists'),
 var saveAndSendImage = function(imageUrl, platform, state){
     console.log(imageUrl);
     var newFileName = uuid.v1() + path.extname(imageUrl);
+    console.log(newFileName);
     //Download the file to tmp folder, rename to unique id
     download(imageUrl, {
         directory: "/tmp",
@@ -27,6 +28,7 @@ var saveAndSendImage = function(imageUrl, platform, state){
             }
         } else {
             //Download complete
+            console.log("trying to send " + "/tmp/" + newFileName);
             platform.image("/tmp/" + newFileName,state);
         }
     });
