@@ -22,7 +22,8 @@
     "impurge" : "latest",
     "imgur-save" : "latest",
     "download-file" : "latest",
-    "node-uuid" : "latest"
+    "node-uuid" : "latest",
+    "is-url" : "latest"
   },
   "scripts": {
     "start": "node index.js -c"

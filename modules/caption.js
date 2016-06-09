@@ -5,7 +5,8 @@ var urlExists = require('url-exists'),
     fs = require("fs"),
     path = require("path"),
     uuid = require('node-uuid'),
-    download = require('download-file');
+    download = require('download-file'),
+    isUrl = require('is-url');
 
 
 var saveAndSendImage = function(imageUrl, platform, state){
@@ -58,22 +59,27 @@ var captionModule = {
                 tokens.splice(0,1);
                 var firstLine = tokens.join("-");
 
-
-                urlExists(image, function(err, exists) {
-                  if(exists)
-                  {
-                    saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
-                  } else 
-                    {
-                        if(image.indexOf(".") === -1){
-                            //tag entered instead of URL, send predefined image
-                            image = config.imagehost.url + image + ".jpg";
-                            saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
-                        } else {
-                            platform.message("Image not found", state);
+                if(isUrl(firstLine) || isUrl(secondLine)){
+                    platform.message("URL gömmeye çalışmayın arlaksızlar v__v");
+                } else {
+                    urlExists(image, function(err, exists) {
+                      if(exists)
+                      {
+                        saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
+                      } else 
+                        {
+                            if(image.indexOf(".") === -1){
+                                //tag entered instead of URL, send predefined image
+                                image = config.imagehost.url + image + ".jpg";
+                                saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
+                            } else {
+                                platform.message("Image not found", state);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
+
             }
         } else if (command === "captags"){
             fs.readdir(config.imagehost.imagePath, function (err, files) {
