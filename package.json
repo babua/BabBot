@@ -20,7 +20,9 @@
     "async": "latest",
     "node-summary": "latest",
     "impurge" : "latest",
-    "imgur-save" : "latest"
+    "imgur-save" : "latest",
+    "download-file" : "latest",
+    "node-uuid" : "latest"
   },
   "scripts": {
     "start": "node index.js -c"

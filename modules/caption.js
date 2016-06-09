@@ -3,7 +3,26 @@
 var urlExists = require('url-exists'),
     config = require('../config/config.js'),
     fs = require("fs"),
-    path = require("path");
+    path = require("path"),
+    uuid = require('node-uuid'),
+    download = require('download-file');
+
+
+var saveAndSendImage = function(imageUrl, platform, state){
+
+    var newFileName = uuid.v1() + path.extname(imageUrl);
+    //Download the file to tmp folder, rename to unique id
+    download(imageUrl, {
+        directory: "/tmp",
+        filename: newFileName
+    }, function(err){
+        if (err) throw err
+            //Download complete
+            platform.image("/tmp/" + newFileName,state);
+        });
+}
+
+
 
 var captionModule = {
     commands: [
@@ -43,13 +62,13 @@ var captionModule = {
                 urlExists(image, function(err, exists) {
                   if(exists)
                   {
-                    platform.message(buildResultText(firstLine, secondLine, image), state);
+                    saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
                   } else 
                     {
                         if(image.indexOf(".") === -1){
                             //tag entered instead of URL, send predefined image
                             image = config.imagehost.url + image + ".jpg";
-                            platform.message(buildResultText(firstLine, secondLine, image), state);
+                            saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
                         } else {
                             platform.message("Image not found", state);
                         }
