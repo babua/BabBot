@@ -17,10 +17,19 @@ var saveAndSendImage = function(imageUrl, platform, state){
         directory: "/tmp",
         filename: newFileName
     }, function(err){
-        if (err) throw err
+        if (err) 
+        {
+            console.log(err)
+            if(err == "404")
+            {
+                platform.message("formatta bi yanlışlık var gibi " + state.message.from.first_name + ' ¯\\_(ツ)_/¯',state);
+
+            }
+        } else {
             //Download complete
             platform.image("/tmp/" + newFileName,state);
-        });
+        }
+    });
 }
 
 
