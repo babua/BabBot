@@ -77,16 +77,16 @@ var captionModule = {
                         console.log(exists);
                       if(exists)
                       {
-                        platform.message(buildResultText(firstLine, secondLine, image), state);
-                        //saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
+                        //platform.message(buildResultText(firstLine, secondLine, image), state);
+                        saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
                       } else 
                         {
                             if(image.indexOf(".") === -1){
                                 //tag entered instead of URL, send predefined image
                                 image = config.imagehost.url + image + ".jpg";
-                                platform.message(buildResultText(firstLine, secondLine, image), state);
+                                //platform.message(buildResultText(firstLine, secondLine, image), state);
                                 
-                                //saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
+                                saveAndSendImage(buildResultText(firstLine, secondLine, image), platform, state);
                             } else {
                                 platform.message("Bu verdiğin adresten resme ulaşamadım", state);
                             }
