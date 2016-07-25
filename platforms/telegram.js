@@ -1,6 +1,7 @@
 'use strict';
 
 var Bot = require('node-telegram-bot'),
+    fs = require('fs'),
     config = require('../config/config.js');
 
 var telegramPlatform = function (babbot) {
