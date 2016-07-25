@@ -13,7 +13,6 @@
     "tutor": "latest",
     "wikipedia-js": "latest",
     "youtube-search": "latest",
-    "url-exists" : "latest",
     "node-readability": "latest",
     "html-to-text": "latest",
     "url-exists": "latest",
@@ -23,7 +22,13 @@
     "imgur-save" : "latest",
     "download-file" : "latest",
     "node-uuid" : "latest",
-    "is-url" : "latest"
+    "is-url" : "latest",
+    "imagegrab" : "latest",
+    "remote-file-size" : "latest",
+    "mkdirp" : "latest",
+    "zipfolder" : "latest",
+    "download" : "latest",
+    "rimraf" : "latest"
   },
   "scripts": {
     "start": "node index.js -c"

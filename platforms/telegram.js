@@ -106,6 +106,33 @@ var telegramPlatform = function (babbot) {
             }
         }
     };
+
+    self.file = function(path,state,options){
+        if(path !== undefined)
+        {
+            console.log("sending file: " + path)
+            self.botInstance.sendDocument(
+                {
+                    chat_id: state.message.chat.id,
+                    reply_to_message_id: state.message.message_id,
+                    files : {document : path}
+                },
+
+                function (err, msg) 
+                {
+                    console.log(err);
+                    console.log(msg);
+                    if(options.deleteAfterSend){
+                        fs.unlink(path,function(err){
+                            if(err) console.log("err");
+                            else console.log("file deleted: " + path);
+                        })
+                    }
+                }                
+            );
+        }
+    };
+
     self.debug = function (obj, state) {
         console.log(obj);
     };
