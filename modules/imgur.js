@@ -12,19 +12,14 @@ var imgModule = {
         if(query === undefined) return;
         console.log(__dirname);
 
+        //impurge doesn't like https , neither mobile URLs. strip both if found
         if(query.lastIndexOf("https://") > -1)
         {   
-            console.log("found secure URL");
             query = "http://" + query.slice(8);
-            console.log(query);
         }
-
-
         if(query.lastIndexOf("http://m.") > -1)
         {   
-            console.log("found mobile URL");
             query = "http://" + query.slice(9);
-            console.log(query);
         }
         if(impurge.is_imgur(query))
         {
