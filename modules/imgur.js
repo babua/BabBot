@@ -13,6 +13,10 @@ var imgModule = {
         console.log(__dirname);
         if(impurge.is_imgur(query))
         {
+            if(query.lastIndexOf("http://m.") > -1)
+            {
+                query = "http://" + query.slice(8);
+            }
             impurge.purge(query, function  (e,r) {
                 r = Array.from(new Set(r)); //unique-ifies the array
                 imgurSave(r, "./tmpImages/", 'babbot', function(err, results) {
