@@ -11,9 +11,9 @@ var imgModule = {
     onCommand: function (command, query, platform, state) {
         if(query === undefined) return;
         console.log(__dirname);
-        console.log('amaney');
         if(query.lastIndexOf("http://m.") > -1)
-        {
+        {   
+            console.log("found mobile URL");
             query = "http://" + query.slice(8);
             console.log(query);
         }
