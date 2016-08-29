@@ -23,7 +23,7 @@ var imgModule = {
         if(query.lastIndexOf("http://m.") > -1)
         {   
             console.log("found mobile URL");
-            query = "http://" + query.slice(8);
+            query = "http://" + query.slice(9);
             console.log(query);
         }
         if(impurge.is_imgur(query))
