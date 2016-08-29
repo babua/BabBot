@@ -11,7 +11,7 @@ var imgModule = {
     onCommand: function (command, query, platform, state) {
         if(query === undefined) return;
         console.log(__dirname);
-        console.log('amaney')
+        console.log('amaney');
         if(query.lastIndexOf("http://m.") > -1)
         {
             query = "http://" + query.slice(8);
