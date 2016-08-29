@@ -11,6 +11,15 @@ var imgModule = {
     onCommand: function (command, query, platform, state) {
         if(query === undefined) return;
         console.log(__dirname);
+
+        if(query.lastIndexOf("https://") > -1)
+        {   
+            console.log("found secure URL");
+            query = "http://" + query.slice(8);
+            console.log(query);
+        }
+
+
         if(query.lastIndexOf("http://m.") > -1)
         {   
             console.log("found mobile URL");
