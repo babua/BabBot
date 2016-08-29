@@ -16,6 +16,7 @@ var imgModule = {
             if(query.lastIndexOf("http://m.") > -1)
             {
                 query = "http://" + query.slice(8);
+                console.log(query);
             }
             impurge.purge(query, function  (e,r) {
                 r = Array.from(new Set(r)); //unique-ifies the array
