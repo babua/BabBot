@@ -11,13 +11,13 @@ var imgModule = {
     onCommand: function (command, query, platform, state) {
         if(query === undefined) return;
         console.log(__dirname);
+        if(query.lastIndexOf("http://m.") > -1)
+        {
+            query = "http://" + query.slice(8);
+            console.log(query);
+        }
         if(impurge.is_imgur(query))
         {
-            if(query.lastIndexOf("http://m.") > -1)
-            {
-                query = "http://" + query.slice(8);
-                console.log(query);
-            }
             impurge.purge(query, function  (e,r) {
                 r = Array.from(new Set(r)); //unique-ifies the array
                 imgurSave(r, "./tmpImages/", 'babbot', function(err, results) {
