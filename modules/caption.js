@@ -43,7 +43,8 @@ var captionModule = {
     ],
 
     onCommand: function (command, query, platform, state) {
-
+        //Disable this module
+        return;
         platform.typing(state);
         if(query !== undefined){
             if(command === "cap"){
