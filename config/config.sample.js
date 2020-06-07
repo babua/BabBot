@@ -2,11 +2,11 @@
 
 module.exports = {
     telegram: {
-        token: 'telegramToken'
+        token: '1233692250:AAFoOBjloVSMMMlVpyTowQJdwrkS15du0kg' 
     },
 
     youtube: {
-        key: 'youtubeAPIKey'
+        key: 'AIzaSyBVq_KOo7Qi3cMznmTcQiWyJ7hVMgGmI9c'
     },
 
     soundcloud: {
